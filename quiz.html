@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <title>Interactive Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+     #box {
+      
+          box-sizing: border-box;
+          width: 100%;
+          max-width: 600px;
+          margin-top: 50px;
+          padding:25px;
+          background-color: white;
+          border-radius: 20px;
+          align-items: center;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .options {
+      display:flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .option {
+      
+      margin: 0 10px;
+      background-color: black;
+      color:#fff;
+      width: 125px;
+      border: 5px;
+      padding: 10px;
+      margin: 20px auto 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #feedback {
+      font-weight: bold;
+    }
+    #btn {
+      
+      background-color: blue;
+      color:#fff;
+      width: 150px;
+      border: 0;
+      padding: 10px;
+      margin: 20px auto 0;
+      border-radius: 4px;
+      cursor: pointer;
+      align-items: center;
+      
+    
+    }
+    #btn:hover{
+      background-color: black;
+      color:#fff;
+  </style>
+</head>
+<body>
+
+<div class="quiz-container" id="box">
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div id="feedback"></div>
+  <button id="btn" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: "Inside which HTML element do we put the JavaScript?",
+      options: ["js", "Script", "html", "css"],
+      answer: "Script"
+    },
+    {
+      question: "Where is the correct place to insert a JavaScript?",
+      options: ["inside head", "inside body", "both", "none"],
+      answer: "inside body"
+    },
+    {
+      question: "The external JavaScript file must contain the <script> tag.",
+      options: ["true", "false"],
+      answer: "false"
+    }
+    
+  ];
+
+  let currentQuestion = 0;
+
+  function loadQuestion() {
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+    const feedbackElement = document.getElementById("feedback");
+
+    const currentQuestionData = questions[currentQuestion];
+    questionElement.textContent = currentQuestionData.question;
+    optionsElement.innerHTML = "";
+
+    currentQuestionData.options.forEach(option => {
+      const button = document.createElement("button");
+      button.textContent = option;
+      button.classList.add("option");
+      button.onclick = function() {
+        if (option === currentQuestionData.answer) {
+          feedbackElement.textContent = "Correct!";
+          feedbackElement.style.color = "green";
+        } else {
+          feedbackElement.textContent = "Incorrect!";
+          feedbackElement.style.color = "red";
+        }
+      };
+      optionsElement.appendChild(button);
+    });
+
+    feedbackElement.textContent = "";
+  }
+
+  function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      loadQuestion();
+    } else {
+      alert("Quiz finished!");
+    }
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
